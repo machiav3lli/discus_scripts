@@ -1,0 +1,43 @@
+* install the needed libraries:
+sudo apt install qrencode libcups2-dev libcupsimage2-dev g++ cups cups-client git cups build-essential system-config-printer
+* wiringpi is deprecated and removed in newer RPiOS therefore gips replaced the script's original commands.
+
+* Test the printer connection
+stty -F /dev/serial0 9600
+echo -e "This is a test.\\n\\n\\n" > /dev/serial0
+* In older versions of Raspbian we’d use /dev/ttyAMA0 instead. If the above commands present a problem, check what’s in the /dev directory and use serial0 or AMA0 as necessary.
+
+* Install the printer driver:
+cd
+git clone https://github.com/adafruit/zj-58
+cd zj-58
+make
+sudo ./install
+
+* To add the printer to the CUPS system and set it as the default:
+sudo lpadmin -p ZJ-58 -E -v serial:/dev/ttyAMA0?baud=9600 -m zjiang/ZJ-58.ppd
+sudo lpoptions -d ZJ-58
+* Test the CUPS setup:
+echo "This is a test." | lp
+echo "This is here to be a very long  test, for us to see if cups format the text in the right way and doesn't dut the text over the end of each line." | lp -o -fit-to-page
+lp -o fit-to-page ${ein Bild Link}
+
+* will generate a PNG image then convert to BMP (with ImageMagick)
+qrencode -o qr.png -t png "Hello World"
+convert qr.png qr.bmp
+
+* We had issues making the printer print UTF8 so we tried Processing.
+* The printer was also unable to print the png/bmp correctly
+* The issue was that the charger not delevering enough power and the ground connectors reacting (discovered while in the eLab)
+* Having enough power, now we started to test different variations of the flyer. Different pixel sizes, differet formats and codes (python or direct through cups' lp)
+* A persisting issue we had was still the lightness of the print (gradients effect on lines with different length). Printing a bitmap is technically seems to force the printer to its performance limits. So it's seemingly slow.
+* Python variation with setting the heat time ourselves produced a little bit better results but even slower printing with some pauses in while working.
+* Another variable is pdf vs. png, print time: ~1:30 for pdf, ~1:20 for png, ~3:20 png on python (3 times, no notable differences)
+* The python printing function does only support images with 384px width, this is why we rewrote the Processing program to use this exact pixel width.
+* As running processing on the raspberry pi 3 is slow, we changed the time the flyer gets created to afterwards an interaction. With this we had to differentiate between the three variants, that now are newly created to replace the older ones insted of one direct creating → printing. Changes: python ~3:00, Python→CUPS ~1:30. Far better results.
+* Printing the hard strings with python it took 8 seconds for the text without the qr-code and needed around 30 seconds with the qr-code.
+
+* Make the printer script launch automatically when the system boots…
+sudo nano /etc/rc.local
+* Before the final “exit 0” line, insert:
+sh /home/pi/Discus/on_boot_pigs_py.sh
