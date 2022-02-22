@@ -1,4 +1,4 @@
-# DISCUS (Scripts)
+# DISCUS Scripts
 
 The software-side of DISCUS - the discussion promoting disc. This collection of the resources, scripts and programs are used in combination with [DISCUS' client](https://github.com/machiav3lli/discus_client).
 
@@ -12,7 +12,7 @@ The software-side of DISCUS - the discussion promoting disc. This collection of 
 
 Includes the Processing program used to create the flyer, parsing the project's information from a JSON file. The included JSON file is just an example that was used in the fair. The font is also optional.
 
-To use a project's data created by the clien:
+To use a project's data created by the client:
 
 1. Copy the project's .json file from the Android device (`/Discus/project_{id}.json`) into the flyer folder.
 
@@ -39,6 +39,10 @@ The post-boot scripts should be added to [one of the post-boot scripts](https://
 
 Includes the Python variant scripts for printing the flyer and a stand-alone to increase the heat-time of the printer. Otherwise it includes a cleaned up copy of the [Adafruit's thermal printer Python library](https://github.com/adafruit/Python-Thermal-Printer).
 
+#### parts
+
+Includes STP files of the main parts and a list of the needed parts to put the device together. Read further in [README](parts/README.md).
+
 ## Requirements
 
 - [ZJ-58 CUPS filter](https://github.com/adafruit/zj-58): CUPS "driver" for Adafruit's thermal printer.
@@ -48,4 +52,6 @@ Includes the Python variant scripts for printing the flyer and a stand-alone to 
 
 ## License
 
-**DISCUS Scripts** is licensed under the [GNU's GPL v3](LICENSE.md).
+**DISCUS Scripts** (except DISCUS Parts) is licensed under the [GNU's GPL v3](LICENSE.md).
+
+By [Johannes Schmidtner](https://github.com/johannesschmidtner) and [Antonios Hazim](https://github.com/machiav3lli)
