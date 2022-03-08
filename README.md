@@ -8,6 +8,8 @@ The software-side of DISCUS - the discussion promoting disc. This collection of 
 
 ## Description
 
+Our term paper on DISCUS can be found [**here**](TERM_PAPER.pdf).
+
 #### flyer
 
 Includes the Processing program used to create the flyer, parsing the project's information from a JSON file. The included JSON file is just an example that was used in the fair. The font is also optional.
